@@ -14,6 +14,7 @@ venv/
 /.anaconda-project/
 /anaconda-project.yml
 /anaconda-project-lock.yml
+/anaconda_projects/
 
 # Jupyter
 .ipynb_checkpoints/
