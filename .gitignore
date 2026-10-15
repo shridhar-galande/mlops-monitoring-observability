@@ -10,6 +10,11 @@ venv/
 .env
 .env.*
 
+# Anaconda Project files (not used by this repository)
+/.anaconda-project/
+/anaconda-project.yml
+/anaconda-project-lock.yml
+
 # Jupyter
 .ipynb_checkpoints/
 
