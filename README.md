@@ -60,6 +60,10 @@ The [CI workflow](./.github/workflows/ci.yml) has two jobs:
    `ghcr.io/<owner>/<repository>:latest` and
    `ghcr.io/<owner>/<repository>:sha-<commit>`.
 
+The Actions run summary shows the tested image's build tag, image ID, and size.
+For successful runs from `main`, it also shows the GHCR image tags and a
+`docker pull` command.
+
 Pull requests run CI but do not publish images. Nothing is deployed to a
 server or started on your local machine by GitHub Actions. You do not need to
 add repository secrets for publishing; the workflow uses `GITHUB_TOKEN`.

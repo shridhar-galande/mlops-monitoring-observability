@@ -72,6 +72,21 @@ jobs:
           python tests/smoke_test_container.py
           python tests/smoke_test_monitoring_stack.py
 
+      - name: Summarize tested image
+        run: |
+          image_id="$(docker image inspect iris-monitoring:test --format '{{.Id}}')"
+          image_size="$(docker image inspect iris-monitoring:test --format '{{.Size}}' | numfmt --to=iec)"
+          {
+            echo "## Docker image build"
+            echo ""
+            echo "- **Build tag:** \`iris-monitoring:test\` (local to this runner)"
+            echo "- **Image ID:** \`$image_id\`"
+            echo "- **Image size:** $image_size"
+            echo "- **Status:** container and monitoring-stack smoke tests passed"
+            echo ""
+            echo "On a push or manual run from \`main\`, the publish job pushes this tested image to GHCR."
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Save tested image for release
         run: docker save iris-monitoring:test | gzip -1 > monitored-model-image.tar.gz
 
@@ -138,3 +153,16 @@ jobs:
           docker tag iris-monitoring:test "$IMAGE_NAME:sha-$short_sha"
           docker push "$IMAGE_NAME:latest"
           docker push "$IMAGE_NAME:sha-$short_sha"
+          {
+            echo "## Docker image published"
+            echo ""
+            echo "- **Latest:** \`$IMAGE_NAME:latest\`"
+            echo "- **This commit:** \`$IMAGE_NAME:sha-$short_sha\`"
+            echo "- **Package page:** [View package](https://github.com/$GITHUB_REPOSITORY/pkgs/container/${GITHUB_REPOSITORY#*/})"
+            echo ""
+            echo "Pull the tested image with:"
+            echo ""
+            echo '```powershell'
+            echo "docker pull $IMAGE_NAME:sha-$short_sha"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
