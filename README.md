@@ -96,6 +96,13 @@ $env:MODEL_IMAGE = $image
 docker compose up -d --wait
 ```
 
+To run the latest published image directly:
+
+```powershell
+$env:MODEL_IMAGE = "ghcr.io/shridhar-galande/mlops-monitoring-observability:latest"
+docker compose up -d --wait
+```
+
 Verify the model health and make a prediction:
 
 ```powershell
